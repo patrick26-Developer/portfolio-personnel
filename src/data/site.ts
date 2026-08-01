@@ -37,6 +37,7 @@ export const site = {
   cvUrl: "/cv-patrick-de-grace.pdf",
   cvFilename: "CV_Patrick_de_Grace_FullStack_DataScientist.pdf",
   avatar: "/photo-du-portefolio.png",
+  logo: "/logo-mark.png",
   socials: {
     github: "https://github.com/patrick26-Developer",
     linkedin:

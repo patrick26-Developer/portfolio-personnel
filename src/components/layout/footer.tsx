@@ -8,12 +8,12 @@ export function Footer() {
     <footer className="border-t border-border/70 px-4 py-10 sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
         <div className="flex items-center gap-3">
-          <span className="relative size-9 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/40">
+          <span className="relative size-9 shrink-0 overflow-hidden rounded-full bg-white ring-2 ring-primary/40">
             <Image
-              src={site.avatar}
+              src={site.logo}
               alt={site.shortName}
               fill
-              className="object-cover"
+              className="object-contain p-0.5"
               sizes="36px"
             />
           </span>
