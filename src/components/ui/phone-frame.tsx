@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 
+import { useT } from "@/i18n/dictionary";
 import { cn } from "@/lib/utils";
 
 interface PhoneFrameProps {
@@ -19,6 +22,8 @@ export function PhoneFrame({
   initials,
   className,
 }: PhoneFrameProps) {
+  const t = useT();
+
   return (
     <div
       className={cn(
@@ -42,7 +47,7 @@ export function PhoneFrame({
               {initials}
             </span>
             <span className="px-4 text-center text-[11px] text-muted-foreground">
-              Capture à venir
+              {t.common.capturePending}
             </span>
           </div>
         )}

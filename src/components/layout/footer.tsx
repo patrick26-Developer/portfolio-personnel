@@ -1,9 +1,16 @@
+"use client";
+
 import { Github, Linkedin } from "lucide-react";
 import Image from "next/image";
 
 import { site } from "@/data/site";
+import { useT } from "@/i18n/dictionary";
+import { useL } from "@/i18n/language-provider";
 
 export function Footer() {
+  const t = useT();
+  const l = useL();
+
   return (
     <footer className="border-t border-border/70 px-4 py-10 sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
@@ -19,7 +26,7 @@ export function Footer() {
           </span>
           <div>
             <div className="text-sm font-semibold">{site.name}</div>
-            <div className="text-xs text-muted-foreground">{site.role}</div>
+            <div className="text-xs text-muted-foreground">{l(site.role)}</div>
           </div>
         </div>
 
@@ -45,7 +52,7 @@ export function Footer() {
         </div>
 
         <p className="text-center text-xs text-muted-foreground md:text-right">
-          © {new Date().getFullYear()} {site.name}. Tous droits réservés.
+          © {new Date().getFullYear()} {site.name}. {t.footer.rightsReserved}
         </p>
       </div>
     </footer>

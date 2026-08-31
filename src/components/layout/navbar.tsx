@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { LanguageToggle } from "@/components/ui/language-toggle";
 import {
   Sheet,
   SheetClose,
@@ -15,6 +16,8 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { site } from "@/data/site";
+import { useT } from "@/i18n/dictionary";
+import { useL } from "@/i18n/language-provider";
 import { cn } from "@/lib/utils";
 
 function scrollToSection(id: string) {
@@ -26,6 +29,8 @@ function scrollToSection(id: string) {
 }
 
 export function Navbar() {
+  const t = useT();
+  const l = useL();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState<string>(site.navItems[0].id);
 
@@ -86,7 +91,7 @@ export function Navbar() {
               {site.shortName}
             </span>
             <span className="text-xs leading-tight text-muted-foreground">
-              {site.role}
+              {l(site.role)}
             </span>
           </span>
         </button>
@@ -104,12 +109,13 @@ export function Navbar() {
                   : "text-muted-foreground hover:text-foreground",
               )}
             >
-              {item.label}
+              {t.nav[item.id]}
             </button>
           ))}
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageToggle />
           <ThemeToggle />
           <Button
             className="hidden lg:inline-flex"
@@ -118,7 +124,7 @@ export function Navbar() {
             render={<a href={site.cvUrl} download={site.cvFilename} />}
           >
             <Download className="size-4" />
-            Télécharger le CV
+            {t.nav.downloadCv}
           </Button>
 
           <Sheet>
@@ -128,7 +134,7 @@ export function Navbar() {
                   variant="ghost"
                   size="icon"
                   className="lg:hidden"
-                  aria-label="Ouvrir le menu"
+                  aria-label={t.nav.openMenu}
                 />
               }
             >
@@ -155,7 +161,7 @@ export function Navbar() {
                       />
                     }
                   >
-                    {item.label}
+                    {t.nav[item.id]}
                   </SheetClose>
                 ))}
               </nav>
@@ -166,7 +172,7 @@ export function Navbar() {
                   render={<a href={site.cvUrl} download={site.cvFilename} />}
                 >
                   <Download className="size-4" />
-                  Télécharger le CV
+                  {t.nav.downloadCv}
                 </Button>
               </div>
             </SheetContent>

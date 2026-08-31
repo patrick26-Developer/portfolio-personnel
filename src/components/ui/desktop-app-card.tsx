@@ -28,8 +28,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PhoneFrame } from "@/components/ui/phone-frame";
-import type { MobileApp } from "@/data/mobile-apps";
+import { WindowFrame } from "@/components/ui/window-frame";
+import type { DesktopApp } from "@/data/desktop-apps";
 import { useT } from "@/i18n/dictionary";
 import { useL } from "@/i18n/language-provider";
 
@@ -37,31 +37,30 @@ function initialsOf(name: string) {
   return name.slice(0, 2).toUpperCase();
 }
 
-export function MobileAppCard({ app }: { app: MobileApp }) {
+export function DesktopAppCard({ app }: { app: DesktopApp }) {
   const t = useT();
   const l = useL();
   const initials = initialsOf(app.name);
   const cover = app.screens?.[0];
-  const statusLabel = t.mobileStatus[app.status];
+  const statusLabel = t.desktopStatus[app.status];
 
   return (
     <Dialog>
-      <Card className="h-full items-center pt-6 text-center transition-shadow hover:shadow-lg hover:shadow-foreground/5">
-        <PhoneFrame cover={cover} alt={app.name} initials={initials} />
+      <Card className="h-full pt-0 transition-shadow hover:shadow-lg hover:shadow-foreground/5">
+        <WindowFrame
+          title={app.name}
+          cover={cover}
+          alt={app.name}
+          initials={initials}
+        />
 
-        <CardHeader className="items-center gap-2">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {app.logo && (
-              <span className="flex size-6 items-center justify-center overflow-hidden rounded-full ring-1 ring-border">
-                <Image
-                  src={app.logo}
-                  alt={`Logo ${app.name}`}
-                  width={24}
-                  height={24}
-                  className="size-full object-cover"
-                />
-              </span>
-            )}
+        <CardHeader className="mt-2 gap-2 px-5">
+          <div className="flex flex-wrap items-center gap-2">
+            {app.platforms?.map((platform) => (
+              <Badge key={platform} variant="secondary">
+                {platform}
+              </Badge>
+            ))}
             <Badge
               variant="outline"
               className="border-amber-600/30 text-amber-700 dark:text-amber-400"
@@ -69,13 +68,24 @@ export function MobileAppCard({ app }: { app: MobileApp }) {
               <Wrench className="size-3" />
               {statusLabel}
             </Badge>
+            {app.icon && (
+              <span className="ml-auto flex size-6 items-center justify-center overflow-hidden rounded-full ring-1 ring-border">
+                <Image
+                  src={app.icon}
+                  alt={`Icône ${app.name}`}
+                  width={24}
+                  height={24}
+                  className="size-full object-cover"
+                />
+              </span>
+            )}
           </div>
           <CardTitle className="text-lg">{app.name}</CardTitle>
           <CardDescription>{l(app.tagline)}</CardDescription>
         </CardHeader>
 
-        <CardContent>
-          <div className="flex flex-wrap justify-center gap-1.5">
+        <CardContent className="px-5">
+          <div className="flex flex-wrap gap-1.5">
             {app.tech.map((tech) => (
               <Badge
                 key={tech}
@@ -88,7 +98,7 @@ export function MobileAppCard({ app }: { app: MobileApp }) {
           </div>
         </CardContent>
 
-        <CardFooter className="gap-2">
+        <CardFooter className="gap-2 px-5">
           {app.repoUrl && (
             <Button
               size="sm"
@@ -103,11 +113,11 @@ export function MobileAppCard({ app }: { app: MobileApp }) {
               }
             >
               <Github className="size-3.5" />
-              {t.mobile.code}
+              {t.desktop.code}
             </Button>
           )}
           <DialogTrigger
-            render={<Button size="sm">{t.mobile.details}</Button>}
+            render={<Button size="sm">{t.desktop.details}</Button>}
           />
         </CardFooter>
       </Card>
@@ -115,12 +125,17 @@ export function MobileAppCard({ app }: { app: MobileApp }) {
       <DialogContent className="max-w-lg sm:max-w-xl">
         <DialogHeader>
           <div className="mb-1 flex flex-wrap items-center gap-2">
+            {app.platforms?.map((platform) => (
+              <Badge key={platform} variant="secondary">
+                {platform}
+              </Badge>
+            ))}
             <Badge
               variant="outline"
               className="border-amber-600/30 text-amber-700 dark:text-amber-400"
             >
               <Wrench className="size-3" />
-              {statusLabel} — {t.mobile.notOnStoresSuffix}
+              {statusLabel}
             </Badge>
           </div>
           <DialogTitle className="text-xl">{app.name}</DialogTitle>
@@ -131,14 +146,14 @@ export function MobileAppCard({ app }: { app: MobileApp }) {
           <Carousel className="px-8">
             <CarouselContent>
               {app.screens.map((src) => (
-                <CarouselItem key={src} className="basis-1/2 sm:basis-1/3">
-                  <div className="overflow-hidden rounded-xl ring-1 ring-border">
+                <CarouselItem key={src}>
+                  <div className="overflow-hidden rounded-lg ring-1 ring-border">
                     <Image
                       src={src}
                       alt={app.name}
-                      width={720}
-                      height={1520}
-                      className="h-auto w-full object-cover"
+                      width={1200}
+                      height={750}
+                      className="h-auto w-full object-cover object-top"
                     />
                   </div>
                 </CarouselItem>
@@ -180,7 +195,7 @@ export function MobileAppCard({ app }: { app: MobileApp }) {
               }
             >
               <Github className="size-4" />
-              {t.mobile.viewSourceCode}
+              {t.desktop.viewSourceCode}
             </Button>
           </div>
         )}

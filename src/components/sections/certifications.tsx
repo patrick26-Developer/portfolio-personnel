@@ -1,17 +1,24 @@
+"use client";
+
 import { Award, ExternalLink, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { certifications } from "@/data/certifications";
 import { site } from "@/data/site";
+import { useT } from "@/i18n/dictionary";
+import { useL } from "@/i18n/language-provider";
 
 export function Certifications() {
+  const t = useT();
+  const l = useL();
+
   return (
     <section id="certifications" className="px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-4xl">
         <SectionHeading
-          eyebrow="Certifications"
-          title="Formations validées"
-          description="Certifications reconnues et parcours académique."
+          eyebrow={t.certifications.eyebrow}
+          title={t.certifications.title}
+          description={t.certifications.description}
         />
 
         <div className="space-y-4">
@@ -45,11 +52,11 @@ export function Certifications() {
                   }
                 >
                   <ExternalLink className="size-3.5" />
-                  Vérifier
+                  {t.certifications.verify}
                 </Button>
               ) : (
                 <span className="rounded-full bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-700 dark:text-emerald-400">
-                  Certifié
+                  {t.certifications.certified}
                 </span>
               )}
             </div>
@@ -59,15 +66,17 @@ export function Certifications() {
         <div className="mt-6 space-y-4 rounded-2xl bg-primary/5 p-6">
           <div className="flex items-center gap-3">
             <GraduationCap className="size-5 text-primary" />
-            <h3 className="font-semibold">Formation académique</h3>
+            <h3 className="font-semibold">
+              {t.certifications.academicEducation}
+            </h3>
           </div>
           {site.education.map((edu) => (
             <div
-              key={edu.degree}
+              key={edu.degree.fr}
               className="flex flex-col items-start justify-between gap-2 border-t border-primary/10 pt-4 first:border-0 first:pt-0 sm:flex-row sm:items-center"
             >
               <div>
-                <p className="font-medium">{edu.degree}</p>
+                <p className="font-medium">{l(edu.degree)}</p>
                 <p className="text-sm text-muted-foreground">
                   {edu.school} · {edu.period}
                 </p>
@@ -86,7 +95,7 @@ export function Certifications() {
                   }
                 >
                   <ExternalLink className="size-3.5" />
-                  Vérifier le diplôme
+                  {t.certifications.verifyDiploma}
                 </Button>
               )}
             </div>

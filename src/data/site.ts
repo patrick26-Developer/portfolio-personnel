@@ -1,5 +1,7 @@
+import type { Localized } from "@/i18n/types";
+
 interface EducationEntry {
-  degree: string;
+  degree: Localized;
   school: string;
   period: string;
   verifyUrl?: string;
@@ -7,26 +9,52 @@ interface EducationEntry {
 
 const education: EducationEntry[] = [
   {
-    degree: "Licence en Développement Informatique",
+    degree: {
+      fr: "Licence en Développement Informatique",
+      en: "Bachelor's Degree in Computer Science Development",
+    },
     school: "Institut International Polytechnique Commerce et Juridique",
     period: "2023 – 2024",
     verifyUrl:
       "https://2i-security.com/verification/verify/e4f25932-6b41-42b4-8e0e-ecb1e87d605b",
   },
   {
-    degree: "Baccalauréat Scientifique (série C)",
+    degree: {
+      fr: "Baccalauréat Scientifique (série C)",
+      en: "Scientific Baccalaureate (Series C)",
+    },
     school: "École privée ALCAR, Pointe-Noire",
     period: "2019 – 2020",
   },
 ];
 
+/** Identifiants stables des sections de nav — le libellé vient du dictionnaire i18n (t.nav[id]). */
+const navItems = [
+  { id: "accueil" },
+  { id: "projets" },
+  { id: "mobile" },
+  { id: "desktop" },
+  { id: "data-science" },
+  { id: "competences" },
+  { id: "certifications" },
+  { id: "contact" },
+] as const;
+
 export const site = {
   name: "Patrick de Grâce Makosso Bayonne",
   shortName: "Patrick de Grâce",
-  role: "Développeur Full-Stack & Data Scientist",
-  tagline:
-    "Je conçois et livre des applications web et mobiles en production, et je transforme des données brutes en analyses exploitables.",
-  bio: "Jeune professionnel congolais titulaire d'une Licence en Développement Informatique, avec une expertise technique en développement web et mobile, en gestion de bases de données et en analyse de données. Rigoureux, organisé et orienté résultats.",
+  role: {
+    fr: "Développeur Full-Stack & Data Scientist",
+    en: "Full-Stack Developer & Data Scientist",
+  } satisfies Localized,
+  tagline: {
+    fr: "Je conçois et livre des applications web et mobiles en production, et je transforme des données brutes en analyses exploitables.",
+    en: "I design and ship production web and mobile applications, and turn raw data into actionable insights.",
+  } satisfies Localized,
+  bio: {
+    fr: "Jeune professionnel congolais titulaire d'une Licence en Développement Informatique, avec une expertise technique en développement web et mobile, en gestion de bases de données et en analyse de données. Rigoureux, organisé et orienté résultats.",
+    en: "Young Congolese professional holding a Bachelor's Degree in Computer Science Development, with technical expertise in web and mobile development, database management, and data analysis. Rigorous, organized, and results-driven.",
+  } satisfies Localized,
   location: "Brazzaville, Congo-Brazzaville",
   email: "mb.patrickdegrace@gmail.com",
   emailSecondary: "makossobayonnepatrickdegrace@outlook.com",
@@ -45,18 +73,34 @@ export const site = {
   },
   education,
   stats: [
-    { label: "Applications en production", value: "4" },
-    { label: "Projets Data Science", value: "5" },
-    { label: "Certifications Python", value: "3" },
-    { label: "Licence Développement Informatique", value: "2024" },
+    {
+      label: {
+        fr: "Applications en production",
+        en: "Applications in production",
+      } satisfies Localized,
+      value: "4",
+    },
+    {
+      label: {
+        fr: "Projets Data Science",
+        en: "Data Science projects",
+      } satisfies Localized,
+      value: "5",
+    },
+    {
+      label: {
+        fr: "Certifications Python",
+        en: "Python certifications",
+      } satisfies Localized,
+      value: "3",
+    },
+    {
+      label: {
+        fr: "Licence Développement Informatique",
+        en: "Computer Science degree",
+      } satisfies Localized,
+      value: "2024",
+    },
   ],
-  navItems: [
-    { id: "accueil", label: "Accueil" },
-    { id: "projets", label: "Projets" },
-    { id: "mobile", label: "Mobile" },
-    { id: "data-science", label: "Data Science" },
-    { id: "competences", label: "Compétences" },
-    { id: "certifications", label: "Certifications" },
-    { id: "contact", label: "Contact" },
-  ],
+  navItems,
 } as const;

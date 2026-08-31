@@ -6,6 +6,8 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { site } from "@/data/site";
+import { useT } from "@/i18n/dictionary";
+import { useL } from "@/i18n/language-provider";
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
@@ -15,6 +17,11 @@ function scrollToSection(id: string) {
 }
 
 export function Hero() {
+  const t = useT();
+  const l = useL();
+  const role = l(site.role);
+  const roleParts = role.split(" & ");
+
   return (
     <section
       id="accueil"
@@ -35,16 +42,16 @@ export function Hero() {
           >
             <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3.5 py-1.5 text-xs font-medium text-primary">
               <span className="size-1.5 rounded-full bg-emerald-500" />
-              Disponible pour de nouvelles opportunités
+              {t.hero.badge}
             </span>
 
             <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl">
-              {site.role.split(" & ")[0]} &amp;{" "}
-              <span className="text-primary">{site.role.split(" & ")[1]}</span>
+              {roleParts[0]} &amp;{" "}
+              <span className="text-primary">{roleParts[1]}</span>
             </h1>
 
             <p className="mx-auto max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg md:mx-0">
-              {site.bio}
+              {l(site.bio)}
             </p>
 
             <div className="flex flex-col flex-wrap justify-center gap-3 pt-2 sm:flex-row md:justify-start">
@@ -53,7 +60,7 @@ export function Hero() {
                 onClick={() => scrollToSection("contact")}
                 className="group"
               >
-                Discutons de votre projet
+                {t.hero.ctaContact}
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
               </Button>
               <Button
@@ -63,7 +70,7 @@ export function Hero() {
                 render={<a href={site.cvUrl} download={site.cvFilename} />}
               >
                 <Download className="size-4" />
-                Télécharger le CV
+                {t.hero.downloadCv}
               </Button>
               <Button
                 size="lg"
@@ -110,14 +117,14 @@ export function Hero() {
         >
           {site.stats.map((stat) => (
             <div
-              key={stat.label}
+              key={stat.label.fr}
               className="rounded-2xl px-4 py-5 text-center ring-1 ring-border sm:text-left"
             >
               <div className="text-2xl font-semibold sm:text-3xl">
                 {stat.value}
               </div>
               <div className="mt-1 text-xs text-muted-foreground sm:text-sm">
-                {stat.label}
+                {l(stat.label)}
               </div>
             </div>
           ))}

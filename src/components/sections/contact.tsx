@@ -13,8 +13,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { site } from "@/data/site";
+import { useT } from "@/i18n/dictionary";
 
 export function Contact() {
+  const t = useT();
   const [copied, setCopied] = useState(false);
 
   const copyEmail = async () => {
@@ -27,15 +29,15 @@ export function Contact() {
     <section id="contact" className="px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-4xl">
         <SectionHeading
-          eyebrow="Contact"
-          title="Travaillons ensemble"
-          description="Disponible pour des opportunités en développement full-stack et data science."
+          eyebrow={t.contact.eyebrow}
+          title={t.contact.title}
+          description={t.contact.description}
         />
 
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="flex flex-col items-center gap-2 rounded-2xl p-6 text-center ring-1 ring-border">
             <Mail className="size-6 text-primary" />
-            <div className="text-sm font-medium">Email</div>
+            <div className="text-sm font-medium">{t.contact.email}</div>
             <div className="text-xs break-all text-muted-foreground">
               {site.email}
             </div>
@@ -48,13 +50,13 @@ export function Contact() {
               ) : (
                 <Copy className="size-3.5" />
               )}
-              {copied ? "Copié" : "Copier"}
+              {copied ? t.contact.copied : t.contact.copy}
             </Button>
           </div>
 
           <div className="flex flex-col items-center gap-2 rounded-2xl p-6 text-center ring-1 ring-border">
             <Phone className="size-6 text-primary" />
-            <div className="text-sm font-medium">Téléphone</div>
+            <div className="text-sm font-medium">{t.contact.phone}</div>
             <a
               href={site.phoneHref}
               className="text-xs text-muted-foreground hover:text-primary"
@@ -71,17 +73,17 @@ export function Contact() {
 
           <div className="flex flex-col items-center gap-2 rounded-2xl p-6 text-center ring-1 ring-border">
             <MapPin className="size-6 text-primary" />
-            <div className="text-sm font-medium">Localisation</div>
+            <div className="text-sm font-medium">{t.contact.location}</div>
             <div className="text-xs text-muted-foreground">{site.location}</div>
           </div>
         </div>
 
         <div className="mt-8 rounded-3xl bg-primary/5 p-8 text-center">
           <h3 className="text-xl font-semibold sm:text-2xl">
-            Prêt à collaborer ?
+            {t.contact.readyToCollaborate}
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground sm:text-base">
-            Échangeons sur votre projet ou votre besoin en recrutement.
+            {t.contact.readyDescription}
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Button
@@ -90,7 +92,7 @@ export function Contact() {
               render={<a href={`mailto:${site.email}`} />}
             >
               <Mail className="size-4" />
-              M'écrire un email
+              {t.contact.emailMe}
             </Button>
             <Button
               size="lg"

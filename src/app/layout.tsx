@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 
 import "./globals.css";
 import { site } from "@/data/site";
+import { LanguageProvider } from "@/i18n/language-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,12 +16,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Metadata rendue côté serveur : toujours en français (langue par défaut du site),
+// le contenu de la page bascule ensuite côté client via le sélecteur de langue.
 export const metadata: Metadata = {
-  title: `${site.shortName} — ${site.role}`,
-  description: site.bio,
+  title: `${site.shortName} — ${site.role.fr}`,
+  description: site.bio.fr,
   openGraph: {
-    title: `${site.shortName} — ${site.role}`,
-    description: site.bio,
+    title: `${site.shortName} — ${site.role.fr}`,
+    description: site.bio.fr,
     type: "profile",
   },
 };
@@ -41,7 +44,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <LanguageProvider>{children}</LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

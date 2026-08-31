@@ -1,13 +1,12 @@
 "use client";
 
-import { Globe } from "lucide-react";
 import Image from "next/image";
 
 import { useT } from "@/i18n/dictionary";
 import { cn } from "@/lib/utils";
 
-interface BrowserFrameProps {
-  url: string;
+interface WindowFrameProps {
+  title: string;
   cover?: string;
   alt: string;
   initials: string;
@@ -15,16 +14,17 @@ interface BrowserFrameProps {
 }
 
 /**
- * Mockup de fenêtre navigateur. Affiche la vraie capture d'écran si `cover` est fournie,
- * sinon un placeholder de marque (jamais d'image cassée) en attendant que la capture soit ajoutée.
+ * Mockup de fenêtre OS (barre de titre, pas de barre d'adresse) pour les captures
+ * d'applications desktop. Affiche un placeholder de marque tant qu'aucune capture
+ * n'est fournie — jamais d'image cassée.
  */
-export function BrowserFrame({
-  url,
+export function WindowFrame({
+  title,
   cover,
   alt,
   initials,
   className,
-}: BrowserFrameProps) {
+}: WindowFrameProps) {
   const t = useT();
 
   return (
@@ -40,10 +40,9 @@ export function BrowserFrame({
           <span className="size-2.5 rounded-full bg-foreground/15" />
           <span className="size-2.5 rounded-full bg-foreground/15" />
         </div>
-        <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-full bg-background px-3 py-1 text-xs text-muted-foreground ring-1 ring-border">
-          <Globe className="size-3 shrink-0" />
-          <span className="truncate">{url.replace(/^https?:\/\//, "")}</span>
-        </div>
+        <span className="min-w-0 flex-1 truncate text-center text-xs font-medium text-muted-foreground">
+          {title}
+        </span>
       </div>
 
       <div className="relative aspect-video w-full overflow-hidden bg-muted">

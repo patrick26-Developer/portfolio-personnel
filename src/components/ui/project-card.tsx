@@ -29,6 +29,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import type { FeaturedProject } from "@/data/projects";
+import { useT } from "@/i18n/dictionary";
+import { useL } from "@/i18n/language-provider";
 import { TechIcon } from "@/lib/tech-icons";
 
 function initialsOf(title: string) {
@@ -44,7 +46,10 @@ function initialsOf(title: string) {
 }
 
 export function ProjectCard({ project }: { project: FeaturedProject }) {
-  const initials = initialsOf(project.title);
+  const t = useT();
+  const l = useL();
+  const title = l(project.title);
+  const initials = initialsOf(title);
 
   return (
     <Dialog>
@@ -52,19 +57,19 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
         <BrowserFrame
           url={project.liveUrl}
           cover={project.cover}
-          alt={project.title}
+          alt={title}
           initials={initials}
         />
 
         <CardHeader className="mt-2 gap-2 px-5">
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{project.category}</Badge>
+            <Badge variant="secondary">{t.categories[project.category]}</Badge>
             <Badge
               variant="outline"
               className="border-emerald-600/30 text-emerald-700 dark:text-emerald-400"
             >
               <span className="mr-1 size-1.5 rounded-full bg-emerald-500" />
-              {project.status}
+              {t.projectStatus[project.status]}
             </Badge>
             {project.mobileLogo && (
               <span className="ml-auto flex size-6 items-center justify-center overflow-hidden rounded-full ring-1 ring-border">
@@ -78,8 +83,8 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
               </span>
             )}
           </div>
-          <CardTitle className="text-lg">{project.title}</CardTitle>
-          <CardDescription>{project.tagline}</CardDescription>
+          <CardTitle className="text-lg">{title}</CardTitle>
+          <CardDescription>{l(project.tagline)}</CardDescription>
         </CardHeader>
 
         <CardContent className="px-5">
@@ -115,13 +120,13 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
               />
             }
           >
-            Voir le site
+            {t.projects.viewSite}
             <ExternalLink className="size-3.5" />
           </Button>
           <DialogTrigger
             render={
               <Button variant="outline" size="sm">
-                Détails
+                {t.projects.details}
               </Button>
             }
           />
@@ -131,25 +136,25 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
       <DialogContent className="max-w-lg sm:max-w-xl">
         <DialogHeader>
           <div className="mb-1 flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{project.category}</Badge>
+            <Badge variant="secondary">{t.categories[project.category]}</Badge>
             <Badge
               variant="outline"
               className="border-emerald-600/30 text-emerald-700 dark:text-emerald-400"
             >
               <span className="mr-1 size-1.5 rounded-full bg-emerald-500" />
-              {project.status}
+              {t.projectStatus[project.status]}
               {project.year ? ` · ${project.year}` : ""}
             </Badge>
           </div>
-          <DialogTitle className="text-xl">{project.title}</DialogTitle>
-          <DialogDescription>{project.description}</DialogDescription>
+          <DialogTitle className="text-xl">{title}</DialogTitle>
+          <DialogDescription>{l(project.description)}</DialogDescription>
         </DialogHeader>
 
         {project.screens && project.screens.length > 0 && (
           <div className="space-y-2">
             {project.mobileScreens && (
               <p className="text-xs font-medium text-muted-foreground">
-                Aperçu web
+                {t.projects.previewWeb}
               </p>
             )}
             <Carousel className="px-8">
@@ -159,7 +164,7 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
                     <div className="overflow-hidden rounded-lg ring-1 ring-border">
                       <Image
                         src={src}
-                        alt={project.title}
+                        alt={title}
                         width={1200}
                         height={750}
                         className="h-auto w-full object-cover object-top"
@@ -181,7 +186,7 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
         {project.mobileScreens && project.mobileScreens.length > 0 && (
           <div className="space-y-2">
             <p className="text-xs font-medium text-muted-foreground">
-              Aperçu application mobile
+              {t.projects.previewMobile}
             </p>
             <Carousel className="px-8">
               <CarouselContent>
@@ -190,7 +195,7 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
                     <div className="overflow-hidden rounded-xl ring-1 ring-border">
                       <Image
                         src={src}
-                        alt={`${project.title} — application mobile`}
+                        alt={`${title} — mobile`}
                         width={720}
                         height={1520}
                         className="h-auto w-full object-cover"
@@ -210,9 +215,13 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
         )}
 
         <div className="flex flex-wrap gap-1.5">
-          {project.tech.map((t) => (
-            <Badge key={t} variant="outline" className="text-muted-foreground">
-              {t}
+          {project.tech.map((tech) => (
+            <Badge
+              key={tech}
+              variant="outline"
+              className="text-muted-foreground"
+            >
+              {tech}
             </Badge>
           ))}
         </div>
@@ -220,9 +229,9 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
         {project.achievements && project.achievements.length > 0 && (
           <ul className="space-y-1.5 text-sm text-muted-foreground">
             {project.achievements.map((a) => (
-              <li key={a} className="flex gap-2">
+              <li key={a.fr} className="flex gap-2">
                 <span className="mt-2 size-1 shrink-0 rounded-full bg-primary" />
-                {a}
+                {l(a)}
               </li>
             ))}
           </ul>
@@ -240,7 +249,7 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
               />
             }
           >
-            Voir le site
+            {t.projects.viewSite}
             <ExternalLink className="size-4" />
           </Button>
           {project.repoUrl && (
@@ -256,7 +265,7 @@ export function ProjectCard({ project }: { project: FeaturedProject }) {
               }
             >
               <Github className="size-4" />
-              Code
+              {t.projects.code}
             </Button>
           )}
         </div>

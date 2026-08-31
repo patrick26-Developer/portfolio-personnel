@@ -1,55 +1,73 @@
+import type { Localized } from "@/i18n/types";
+
+export type SkillCategoryKey =
+  | "frontend"
+  | "backend"
+  | "languages"
+  | "databases"
+  | "dataScience"
+  | "aiTools"
+  | "tools";
+
 export interface SkillGroup {
-  category: string;
-  items: string[];
+  category: SkillCategoryKey;
+  /** Noms de technos (identiques FR/EN) ou libellés descriptifs à traduire. */
+  items: (string | Localized)[];
 }
 
 export const skillGroups: SkillGroup[] = [
   {
-    category: "Frontend",
+    category: "frontend",
     items: ["Next.js", "React", "React Native", "TypeScript", "Tailwind CSS"],
   },
-  { category: "Backend", items: ["NestJS", "Django", "Node.js", "REST APIs"] },
   {
-    category: "Langages",
+    category: "backend",
+    items: ["NestJS", "Django", "Node.js", "REST APIs"],
+  },
+  {
+    category: "languages",
     items: ["JavaScript / TypeScript", "Python", "Java", "C / C++", "C#"],
   },
-  { category: "Bases de données", items: ["PostgreSQL", "MySQL", "Oracle"] },
+  { category: "databases", items: ["PostgreSQL", "MySQL", "Oracle"] },
   {
-    category: "Data Science",
+    category: "dataScience",
     items: [
-      "Analyse de données",
-      "Visualisation",
-      "Modélisation prédictive",
+      { fr: "Analyse de données", en: "Data analysis" },
+      { fr: "Visualisation", en: "Visualization" },
+      { fr: "Modélisation prédictive", en: "Predictive modeling" },
       "Pandas",
       "Matplotlib",
       "Seaborn",
     ],
   },
   {
-    category: "Gestion & Outils IA",
+    category: "aiTools",
     items: [
       "Claude",
       "ChatGPT",
       "Gemini",
-      "Gestion de projet & reporting",
+      {
+        fr: "Gestion de projet & reporting",
+        en: "Project management & reporting",
+      },
       "Trello",
       "Word / Excel / PowerPoint / Canva",
     ],
   },
   {
-    category: "Outils",
+    category: "tools",
     items: ["Git / GitHub / GitLab", "Docker", "Vercel", "Jupyter"],
   },
 ];
 
 /** Qualités professionnelles issues du CV — soft skills. */
-export const softSkills: string[] = [
-  "Rigueur",
-  "Esprit d'analyse",
-  "Sens du service",
-  "Communication",
-  "Travail en équipe",
-  "Gestion des priorités",
-  "Résolution de problèmes",
-  "Veille technologique",
+export const softSkills: Localized[] = [
+  { fr: "Rigueur", en: "Rigor" },
+  { fr: "Esprit d'analyse", en: "Analytical mindset" },
+  { fr: "Sens du service", en: "Customer focus" },
+  { fr: "Communication", en: "Communication" },
+  { fr: "Travail en équipe", en: "Teamwork" },
+  { fr: "Gestion des priorités", en: "Priority management" },
+  { fr: "Résolution de problèmes", en: "Problem solving" },
+  { fr: "Veille technologique", en: "Technology watch" },
 ];

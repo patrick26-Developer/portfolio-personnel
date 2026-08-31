@@ -1,3 +1,5 @@
+"use client";
+
 import {
   BarChart3,
   Grid3x3,
@@ -10,17 +12,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { dataVizProjects } from "@/data/projects";
 import { site } from "@/data/site";
+import { useT } from "@/i18n/dictionary";
+import { useL } from "@/i18n/language-provider";
 
 const icons = [BarChart3, Thermometer, MapIcon, Grid3x3, ScatterChart];
 
 export function DataScience() {
+  const t = useT();
+  const l = useL();
+
   return (
     <section id="data-science" className="px-4 py-20 sm:px-6 sm:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow="Data Science"
-          title="Analyse & visualisation de données"
-          description="Projets Python / D3.js réalisés dans le cadre de mes certifications freeCodeCamp."
+          eyebrow={t.dataScience.eyebrow}
+          title={t.dataScience.title}
+          description={t.dataScience.description}
         />
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -39,20 +46,22 @@ export function DataScience() {
                     <span className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                       <Icon className="size-5" />
                     </span>
-                    <CardTitle className="text-base">{project.name}</CardTitle>
+                    <CardTitle className="text-base">
+                      {l(project.name)}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <p className="text-sm text-muted-foreground">
-                      {project.description}
+                      {l(project.description)}
                     </p>
                     <div className="flex flex-wrap gap-1.5">
-                      {project.tech.map((t) => (
+                      {project.tech.map((tech) => (
                         <Badge
-                          key={t}
+                          key={tech}
                           variant="outline"
                           className="text-muted-foreground"
                         >
-                          {t}
+                          {tech}
                         </Badge>
                       ))}
                     </div>

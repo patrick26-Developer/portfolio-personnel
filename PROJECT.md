@@ -92,14 +92,16 @@ On s'aligne sur **cette** structure existante plutôt que d'en imposer une autre
 
 ```
 src/
-  app/            layout.tsx (metadata + ThemeProvider next-themes), page.tsx (composition, Server Component), globals.css
+  app/            layout.tsx (metadata + ThemeProvider next-themes + LanguageProvider), page.tsx (composition, Server Component), globals.css
   components/
     layout/       navbar, footer
-    sections/     hero, featured-projects (carousel → "use client" obligatoire), github-highlights, data-science, skills, certifications, contact
-    ui/           shadcn (style "base-nova", primitives @base-ui/react — PAS radix) + custom : browser-frame, project-card,
+    sections/     hero, featured-projects (carousel → "use client" obligatoire), mobile-apps, desktop-apps, github-highlights, data-science, skills, certifications, contact
+    ui/           shadcn (style "base-nova", primitives @base-ui/react — PAS radix) + custom : browser-frame, window-frame, phone-frame,
+                  project-card, mobile-app-card, desktop-app-card,
                   peek-carousel (carousel "peek" avec autoplay fait main, pas de dépendance embla-carousel-autoplay),
-                  section-heading, scroll-to-top, theme-toggle
-  data/           site.ts, projects.ts, certifications.ts, skills.ts
+                  section-heading, scroll-to-top, theme-toggle, language-toggle
+  data/           site.ts, projects.ts, mobile-apps.ts, desktop-apps.ts, certifications.ts, skills.ts
+  i18n/           types.ts (Localized, Lang), language-provider.tsx (contexte FR/EN + hooks), dictionary.ts (chaînes UI FR/EN)
   lib/            utils.ts (cn helper, généré par shadcn)
 public/
   gallery/app-web/<slug>/, gallery/app-mobile/<Slug>/  (voir §7 pour la convention réelle)
@@ -117,6 +119,10 @@ public/
 - Section **Applications Mobiles** séparée des projets web (`sections/mobile-apps.tsx`, `data/mobile-apps.ts`, `ui/phone-frame.tsx`, `ui/mobile-app-card.tsx`) : statut "En développement" (badge ambre) au lieu de "En production" (émeraude), pas de bouton "Voir le site" (pas encore publiée sur les stores), mockup téléphone au lieu du navigateur.
 - Vraies icônes de marque via `@icons-pack/react-simple-icons` (`lib/tech-icons.tsx`), en monochrome (`currentColor`) pour rester dans la palette sobre plutôt que réintroduire une mosaïque de couleurs de marque. Utilisées dans Compétences et les tags tech des cartes projet. Certaines technologies n'ont pas d'icône dans ce set (Oracle, Java, ChatGPT, Canva, Zustand, D3.js, MS Office) → fallback silencieux (pas d'icône affichée), assumé plutôt que d'inventer.
 - **Sécurité** : Vercel a flagué au premier déploiement une faille RCE critique (CVSS 10, GHSA-9qr9-h5gf-34mp) dans Next.js 15.5.4. Mis à jour vers `15.5.22` (fix officiel). `npm audit` signale encore 3 vulnérabilités "high" sur `postcss`/`sharp` mais uniquement nichées *à l'intérieur* de la propre arborescence de dépendances de `next` — le seul correctif que `npm audit fix --force` propose est de **downgrader** vers `next@9.3.3`, une régression absurde à ne jamais appliquer. Laissé tel quel ; à surveiller lors des prochaines mises à jour de Next.js.
+- **i18n FR/EN** : sélecteur de langue client-side (pas de routing `/en`, `/fr` — portfolio one-page à ancres, une segmentation par locale aurait cassé la navigation par ancre). `i18n/language-provider.tsx` expose un contexte React (`useLanguage`, `useL`) persisté en `localStorage` (`portfolio-lang`), lu après montage façon `next-themes` pour éviter un mismatch d'hydratation (flash FR→EN bref plutôt qu'un warning React) ; défaut `"fr"` côté serveur et au premier rendu client. `i18n/dictionary.ts` centralise toutes les chaînes d'UI fixes (`useT()`) ; le contenu éditorial (descriptions de projets, bio, achievements...) est directement porté par les objets `data/*.ts` via le type `Localized = { fr; en }` et résolu avec `useL()`. Les métadonnées Next.js (`layout.tsx`, SSR) restent toujours en français (`site.bio.fr`), seul le contenu client bascule.
+- Les noms de technos (`skills.ts` `items`, tags `tech[]` des projets) restent des `string[]` non traduits (identiques FR/EN : Next.js, Docker, PostgreSQL...) sauf les libellés descriptifs (ex. catégorie Data Science → `{ fr; en }`) via un type `(string | Localized)[]` — évite de dupliquer des noms propres dans le dictionnaire.
+- Catégories de projet (`Fintech`, `Mobilité`...) et statuts (`En production`, `En développement`...) sont stockés comme des *clés* stables (`category: "fintech"`, `status: "production"`) dans `data/*.ts`, traduits à l'affichage via `dictionary.ts` (`t.categories`, `t.projectStatus`, `t.mobileStatus`) — évite de dupliquer ces libellés courts dans chaque entrée de données.
+- Section **Applications Desktop** (`sections/desktop-apps.tsx`, `data/desktop-apps.ts`, `ui/window-frame.tsx`, `ui/desktop-app-card.tsx`) : même pattern que Mobile (statut développement/publiée, mockup dédié — fenêtre OS avec barre de titre, sans barre d'adresse). `desktopApps` est vide tant que l'utilisateur n'a pas fourni de projet réel (zéro contenu inventé, cf. §2) : la section affiche un état "Bientôt disponible" plutôt qu'un projet fictif ou une grille vide.
 
 ## 5. Suivi d'avancement
 
@@ -132,6 +138,8 @@ public/
 - [x] Lint (biome) propre sur tout le code écrit par nous — build Next.js en cours de vérification
 - [x] Test navigateur complet (Playwright headless) : thème clair/sombre + persistance après reload OK, carousel (flèches/dots/autoplay) OK, modal Causerie (web+mobile) OK, placeholders BANKI/TravelHub propres (pas d'image cassée), responsive mobile (menu burger) OK, zéro erreur console après le fix `nativeButton`
 - [ ] Captures réelles restantes (BANKI, TravelHub) — S.I.S. et Causerie ont déjà de vraies captures
+- [x] Sélecteur de langue FR/EN (`i18n/`) : tout le contenu affiché (UI + data) traduit, métadonnées SSR restent en FR
+- [x] Section **Applications Desktop** ajoutée (structure + état "Bientôt disponible") — en attente des projets réels (captures, nom, description) que l'utilisateur doit fournir
 
 ---
-*Dernière mise à jour : contenu et visuels enrichis au fil de l'eau par l'utilisateur (S.I.S. cover ajouté) ; suite du travail = intégrer les prochaines captures BANKI/TravelHub dès qu'elles arrivent, en suivant la convention du §7.*
+*Dernière mise à jour : sélecteur de langue FR/EN ajouté (contenu entièrement traduit) et section Applications Desktop créée (vide, en attente des projets réels de l'utilisateur) ; suite du travail = intégrer les projets desktop dès qu'ils arrivent, et les prochaines captures BANKI/TravelHub, en suivant la convention du §7.*
