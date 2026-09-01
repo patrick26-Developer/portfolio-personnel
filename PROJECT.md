@@ -32,6 +32,11 @@ Portfolio crédible, professionnel, orienté recruteurs : vrais projets (pas de 
 - `budget-tracker-mobile` — suivi de dépenses personnelles (mobile)
 - `Akieni-RH-Dashboard` — dashboard Python de suivi de performance d'apprenants
 
+### Applications Desktop
+| Projet | Repo | Résumé vérifié (README) |
+|---|---|---|
+| DevDesk | https://github.com/patrick26-Developer/devdesk | Boîte à outils développeur Electron/React/TypeScript, 13 outils (JSON, Base64, UUID, Regex, JWT, Hash, Markdown, QR code, client API...), 100% local sauf l'API Tester, architecture Electron de référence (main/renderer séparés, IPC via contextBridge), thème clair/sombre + interface bilingue FR/EN. Statut "En développement" (aucune release GitHub publiée, version interne v1.0.0). |
+
 ### Data Science & Visualisation (freeCodeCamp, D3.js/Python)
 `bar-chart-visualization`, `heatmap-project`, `choropleth-map`, `treemap-diagram`, `Scatterplot-Graph`
 
@@ -74,6 +79,7 @@ L'utilisateur a créé sa propre arborescence (différente du `public/gallery/<s
 public/gallery/
   app-web/<slug>/       captures des sites web (ex: app-web/causerie/*.png)
   app-mobile/<Slug>/    captures + logo des apps mobiles (ex: app-mobile/Causerie/*.png)
+  desktop/<Slug>/       captures + icône des apps desktop (ex: desktop/DevDesk/*.png)
 ```
 On s'aligne sur **cette** structure existante plutôt que d'en imposer une autre.
 
@@ -84,9 +90,14 @@ On s'aligne sur **cette** structure existante plutôt que d'en imposer une autre
 - Exclure les captures "bureau complet" (fenêtre navigateur/émulateur avec barre de favoris, onglets, icônes du bureau visibles) — non professionnel (ex: `app-mobile/Causerie/1.png` et `screen-1.png`, captures d'écran complètes de l'émulateur Android avec le bureau Windows en fond — non utilisées)
 - Exclure les conversations privées/casual entre l'utilisateur et des proches quand une alternative plus neutre existe (ex: liste de conversations ou vue de groupe plutôt qu'un DM perso)
 
-**État actuel (Causerie, le seul projet avec captures réelles pour l'instant)** :
+**État actuel (Causerie, le seul projet web/mobile avec captures réelles pour l'instant)** :
 - Web (`app-web/causerie/`) : `dashboard-accueil-dark.png` (cover), `auth-dark.png`, `Notif.png` — utilisées. Non utilisées : `users.png` (PII), les 2 `Capture d'écran ...png` (bureau complet avec onglets personnels), `auth-admin.png`, `Verify-auth.png` (non regardées, pas nécessaires pour l'instant)
 - Mobile (`app-mobile/Causerie/`) : logo `true-logo.png` (utilisé comme `mobileLogo`), 4 captures parmi les 16 `Screenshot_2026...png` sélectionnées pour montrer les fonctionnalités clés (liste de discussions, chat de groupe, et les thèmes de couleur clair/sombre personnalisables — bleu, rose, vert) : `134451`, `134639`, `134733`, `134901`. Non utilisées : `1.png`/`screen-1.png` (bureau complet), `134509` (DM personnel avec numéro de téléphone visible), le reste non examiné individuellement (pas nécessaire, 4 captures suffisent pour l'aperçu)
+
+**Desktop (`desktop/DevDesk/`)** :
+- `devdesk-icon.png` : icône officielle de l'app fournie par l'utilisateur (haute résolution, fond transparent) — utilisée telle quelle comme `icon`.
+- Utilisées comme `screens` : `1.png` (accueil, thème clair), `1_1.png` (accueil, thème sombre), `5.png` (Settings — thème + langue FR/EN, écho direct au sélecteur de langue du portfolio), `6.png` (.env → JSON), `7.png` (QR Code Generator), `4.png` (HTTP Status Codes).
+- Non utilisées : `1_1_1.png` (bureau Windows complet visible avec icônes personnelles — même règle que Causerie ci-dessus), `3.png` (API Client affichant un mot de passe de test en clair — évité par prudence même si c'est une donnée factice locale).
 
 ## 4. Architecture réelle
 
@@ -140,6 +151,7 @@ public/
 - [ ] Captures réelles restantes (BANKI, TravelHub) — S.I.S. et Causerie ont déjà de vraies captures
 - [x] Sélecteur de langue FR/EN (`i18n/`) : tout le contenu affiché (UI + data) traduit, métadonnées SSR restent en FR
 - [x] Section **Applications Desktop** ajoutée (structure + état "Bientôt disponible") — en attente des projets réels (captures, nom, description) que l'utilisateur doit fournir
+- [x] Premier projet Desktop intégré : **DevDesk** (`data/desktop-apps.ts`), captures + icône réelles dans `public/gallery/desktop/DevDesk/`
 
 ---
-*Dernière mise à jour : sélecteur de langue FR/EN ajouté (contenu entièrement traduit) et section Applications Desktop créée (vide, en attente des projets réels de l'utilisateur) ; suite du travail = intégrer les projets desktop dès qu'ils arrivent, et les prochaines captures BANKI/TravelHub, en suivant la convention du §7.*
+*Dernière mise à jour : premier projet Desktop réel ajouté (DevDesk — boîte à outils développeur Electron/React/TypeScript), avec icône recadrée et captures filtrées (bureau Windows complet et identifiants de test exclus, cf. §7) ; suite du travail = prochaines captures BANKI/TravelHub, et tout nouveau projet desktop/mobile/web que l'utilisateur partage, en suivant la convention du §7.*
