@@ -2,6 +2,7 @@ import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import { Certifications } from "@/components/sections/certifications";
 import { Contact } from "@/components/sections/contact";
+import { Courses } from "@/components/sections/courses";
 import { DataScience } from "@/components/sections/data-science";
 import { DesktopApps } from "@/components/sections/desktop-apps";
 import { FeaturedProjects } from "@/components/sections/featured-projects";
@@ -24,6 +25,7 @@ export default function Home() {
         <DataScience />
         <Skills />
         <Certifications />
+        <Courses />
         <Contact />
       </main>
       <Footer />

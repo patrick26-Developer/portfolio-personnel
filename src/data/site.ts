@@ -28,15 +28,27 @@ const education: EducationEntry[] = [
   },
 ];
 
-/** Identifiants stables des sections de nav — le libellé vient du dictionnaire i18n (t.nav[id]). */
+/**
+ * Identifiants stables des sections de nav — le libellé vient du dictionnaire i18n (t.nav[id]).
+ * Un item peut être un lien simple (scroll direct vers la section `id`) ou un groupe
+ * `children` (menu déroulant en desktop, sous-liste en mobile) — pratique pour ranger de
+ * futures catégories (ex: ajouter un "Backend" ou "Data" sous Projets) sans surcharger la nav.
+ * `sectionId` précise l'ancre réelle quand elle diffère de l'`id` du lien (ex: "projets-web" -> #projets).
+ */
 const navItems = [
   { id: "accueil" },
-  { id: "projets" },
-  { id: "mobile" },
-  { id: "desktop" },
+  {
+    id: "projets",
+    children: [
+      { id: "projets-web", sectionId: "projets" },
+      { id: "mobile" },
+      { id: "desktop" },
+    ],
+  },
   { id: "data-science" },
   { id: "competences" },
   { id: "certifications" },
+  { id: "formations" },
   { id: "contact" },
 ] as const;
 

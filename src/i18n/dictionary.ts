@@ -6,11 +6,13 @@ const dictionary = {
     nav: {
       accueil: "Accueil",
       projets: "Projets",
+      "projets-web": "Web",
       mobile: "Mobile",
       desktop: "Desktop",
       "data-science": "Data Science",
       competences: "Compétences",
       certifications: "Certifications",
+      formations: "Formations",
       contact: "Contact",
       downloadCv: "Télécharger le CV",
       openMenu: "Ouvrir le menu",
@@ -107,6 +109,21 @@ const dictionary = {
       academicEducation: "Formation académique",
       verifyDiploma: "Vérifier le diplôme",
     },
+    courses: {
+      eyebrow: "Formations",
+      title: "Formations gratuites & partage de compétences",
+      description:
+        "Je transforme mon expertise en parcours pratiques et gratuits, ouverts à toute personne qui veut apprendre à coder.",
+      viewCourse: "Accéder au cours",
+      details: "Détails",
+      code: "Code",
+      viewSourceCode: "Voir le code source",
+      modulesLabel: "modules",
+    },
+    courseStatus: {
+      available: "Disponible",
+      upcoming: "Bientôt disponible",
+    },
     contact: {
       eyebrow: "Contact",
       title: "Travaillons ensemble",
@@ -135,11 +152,13 @@ const dictionary = {
     nav: {
       accueil: "Home",
       projets: "Projects",
+      "projets-web": "Web",
       mobile: "Mobile",
       desktop: "Desktop",
       "data-science": "Data Science",
       competences: "Skills",
       certifications: "Certifications",
+      formations: "Courses",
       contact: "Contact",
       downloadCv: "Download CV",
       openMenu: "Open menu",
@@ -233,6 +252,21 @@ const dictionary = {
       certified: "Certified",
       academicEducation: "Academic background",
       verifyDiploma: "Verify diploma",
+    },
+    courses: {
+      eyebrow: "Courses",
+      title: "Free courses & knowledge sharing",
+      description:
+        "I turn my expertise into practical, free learning paths, open to anyone who wants to learn how to code.",
+      viewCourse: "Go to the course",
+      details: "Details",
+      code: "Code",
+      viewSourceCode: "View source code",
+      modulesLabel: "modules",
+    },
+    courseStatus: {
+      available: "Available",
+      upcoming: "Coming soon",
     },
     contact: {
       eyebrow: "Contact",
