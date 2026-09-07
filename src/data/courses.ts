@@ -14,9 +14,12 @@ export interface Course {
   tech: string[];
   highlights?: Localized[];
   status: CourseStatus;
-  modulesCount?: number;
+  /** Volume du cursus, ex: "13 modules", "15 niveaux". */
+  curriculum?: Localized;
   cover?: string;
+  /** Site vitrine de la formation, si publié. */
   siteUrl?: string;
+  /** Dépôt GitHub du contenu de la formation. */
   repoUrl?: string;
 }
 
@@ -66,10 +69,58 @@ export const courses: Course[] = [
       },
     ],
     status: "available",
-    modulesCount: 13,
+    curriculum: { fr: "13 modules", en: "13 modules" },
     cover: "/gallery/Formations/fastAPI/fastAPI.png",
     siteUrl: "https://fastapi-formation-vitrine.onrender.com/",
     repoUrl: "https://github.com/patrick26-Developer/Backend-Python",
+  },
+  {
+    slug: "php-laravel",
+    language: "PHP",
+    framework: "Laravel",
+    title: {
+      fr: "PHP → Laravel — La formation complète",
+      en: "PHP → Laravel — The Complete Course",
+    },
+    tagline: {
+      fr: "15 niveaux, du PHP fondamental à Laravel expert : API REST, Livewire, Docker, CI/CD",
+      en: "15 levels, from core PHP to expert Laravel: REST APIs, Livewire, Docker, CI/CD",
+    },
+    description: {
+      fr: "Formation gratuite et progressive pour apprendre PHP depuis les bases absolues jusqu'à la maîtrise experte de Laravel, le framework PHP le plus utilisé au monde. 15 niveaux numérotés à suivre dans l'ordre ; chaque module contient le cours (théorie + code commenté), des exercices et leurs corrigés commentés. Des mini-projets et grands projets réels (blog, petites annonces, e-commerce, SaaS) sont rattachés aux niveaux qui les rendent possibles. Couvre la POO, la sécurité, les bases de données, les tests (PHPUnit puis Pest), l'architecture et le DevOps (Docker, CI/CD).",
+      en: "A free, progressive course to learn PHP from the absolute basics up to expert mastery of Laravel, the world's most used PHP framework. 15 numbered levels to follow in order; each module contains the lesson (theory + commented code), exercises, and their commented solutions. Real mini-projects and larger projects (blog, classifieds, e-commerce, SaaS) are attached to the levels that make them possible. Covers OOP, security, databases, testing (PHPUnit then Pest), architecture, and DevOps (Docker, CI/CD).",
+    },
+    tech: [
+      "PHP 8.3",
+      "Laravel",
+      "Livewire",
+      "Blade",
+      "MySQL",
+      "Pest",
+      "Docker",
+      "GitHub Actions",
+    ],
+    highlights: [
+      {
+        fr: "15 niveaux progressifs (00 → 14) : cours + exercices + corrigés commentés",
+        en: "15 progressive levels (00 → 14): lessons + exercises + commented solutions",
+      },
+      {
+        fr: "100 % PHP fullstack : Blade + Livewire, sans framework JS lourd",
+        en: "100% PHP fullstack: Blade + Livewire, no heavy JS framework",
+      },
+      {
+        fr: "Projets réels : blog, petites annonces, e-commerce, SaaS",
+        en: "Real projects: blog, classifieds, e-commerce, SaaS",
+      },
+      {
+        fr: "Sécurité, tests (PHPUnit / Pest), architecture et DevOps (Docker, CI/CD)",
+        en: "Security, testing (PHPUnit / Pest), architecture, and DevOps (Docker, CI/CD)",
+      },
+    ],
+    status: "available",
+    curriculum: { fr: "15 niveaux", en: "15 levels" },
+    repoUrl: "https://github.com/patrick26-Developer/formation-php-laravel",
   },
   {
     slug: "typescript",

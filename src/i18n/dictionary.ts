@@ -118,7 +118,6 @@ const dictionary = {
       details: "Détails",
       code: "Code",
       viewSourceCode: "Voir le code source",
-      modulesLabel: "modules",
     },
     courseStatus: {
       available: "Disponible",
@@ -262,7 +261,6 @@ const dictionary = {
       details: "Details",
       code: "Code",
       viewSourceCode: "View source code",
-      modulesLabel: "modules",
     },
     courseStatus: {
       available: "Available",

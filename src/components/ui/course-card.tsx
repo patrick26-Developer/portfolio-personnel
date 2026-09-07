@@ -35,12 +35,13 @@ export function CourseCard({ course }: { course: Course }) {
   const title = l(course.title);
   const initials = initialsOf(course.language);
   const isAvailable = course.status === "available";
+  const primaryUrl = course.siteUrl ?? course.repoUrl;
 
   return (
     <Dialog>
       <Card className="h-full pt-0 transition-shadow hover:shadow-lg hover:shadow-foreground/5">
         <BrowserFrame
-          url={course.siteUrl ?? course.language}
+          url={primaryUrl ?? course.language}
           cover={course.cover}
           alt={title}
           initials={initials}
@@ -69,13 +70,13 @@ export function CourseCard({ course }: { course: Course }) {
               />
               {t.courseStatus[course.status]}
             </Badge>
-            {course.modulesCount && (
+            {course.curriculum && (
               <Badge
                 variant="outline"
                 className="ml-auto text-muted-foreground"
               >
                 <Layers className="size-3" />
-                {course.modulesCount} {t.courses.modulesLabel}
+                {l(course.curriculum)}
               </Badge>
             )}
           </div>
@@ -103,21 +104,30 @@ export function CourseCard({ course }: { course: Course }) {
         </CardContent>
 
         <CardFooter className="gap-2 px-5">
-          {isAvailable && course.siteUrl ? (
+          {isAvailable && primaryUrl ? (
             <Button
               size="sm"
               className="flex-1"
               nativeButton={false}
               render={
                 <a
-                  href={course.siteUrl}
+                  href={primaryUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 />
               }
             >
-              {t.courses.viewCourse}
-              <ExternalLink className="size-3.5" />
+              {course.siteUrl ? (
+                <>
+                  {t.courses.viewCourse}
+                  <ExternalLink className="size-3.5" />
+                </>
+              ) : (
+                <>
+                  <Github className="size-3.5" />
+                  {t.courses.viewCourse}
+                </>
+              )}
             </Button>
           ) : (
             <Button size="sm" className="flex-1" disabled>
